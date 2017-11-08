@@ -24,3 +24,5 @@ app.post('/todos', (req, res) => {
 app.listen(3000, () => {
     console.log("node api started");
 });
+
+module.exports = {app};
