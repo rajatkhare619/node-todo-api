@@ -48,6 +48,23 @@ app.get('/todos/:id', (req, res) => {
 
 });
 
+app.delete('/todos/:id', (req, res) => {
+    let id = req.params.id;
+
+    if(!ObjectId.isValid(id)) {
+        return res.status(400).send("can't delete: invalid id");
+    }
+
+    Todo.findByIdAndRemove(id).then((todo) => {
+        if(!todo) {
+            return res.status(404).send("can' delete: no todo with this id");
+        }
+        return res.status(200).send(todo);
+    }).catch((error) => {
+        res.status(404).send("error", error)
+    });
+});
+
 app.listen(port, () => {
     console.log("node api started at ", port);
 });
