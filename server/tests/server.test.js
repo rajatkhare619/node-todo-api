@@ -90,10 +90,10 @@ describe("GET /todos/:id", () => {
             .end(done);
     });
 
-    it("should return 404 for non-object id", (done) => {
+    it("should return 400 for non-object id", (done) => {
         request(app)
             .get('/todos/ad23')
-            .expect(404)
+            .expect(400)
             .end(done);
     });
 });
