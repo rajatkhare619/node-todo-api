@@ -107,6 +107,21 @@ app.patch('/todos/:id', (req, res) => {
     });
 });
 
+app.post('/users', (req, res) => {
+    let body = _.pick(req.body, ['email', 'password']);
+
+    let user = new User(body);
+
+    user.save().then(() => {
+        return user.generateAuthToken();
+        //res.status(200).send(user);
+    }).then((token) => {
+        res.header('x-auth', token).send(user);
+    }).catch((error) => {
+        res.status(404).send(error);
+    });
+});
+
 app.listen(port, () => {
     console.log("node api started at ", port);
 });
