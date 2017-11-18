@@ -7,6 +7,7 @@ const _ = require('lodash');
 const {mongoose} = require('./db/mongoose');
 const {Todo} = require('./models/todo');
 const {User} = require('./models/user');
+const {authenticate} = require('./middleware/authenticate');
 
 const {ObjectId} = require('mongodb');
 
@@ -121,6 +122,13 @@ app.post('/users', (req, res) => {
         res.status(404).send(error);
     });
 });
+
+
+
+app.get('/users/me', authenticate, (req, res) => {
+    res.send(req.user);
+});
+
 
 app.listen(port, () => {
     console.log("node api started at ", port);
